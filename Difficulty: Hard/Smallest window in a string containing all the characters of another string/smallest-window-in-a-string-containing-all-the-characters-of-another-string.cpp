@@ -8,57 +8,41 @@ using namespace std;
 class Solution
 {
     public:
-    //Function to find the smallest window in the string s consisting
-    //of all the characters of string p.
     string smallestWindow (string s, string p)
     {
-        //we will be keeping track of frequency of p in a map
-       // unordered_map<char,int>tmap;
-        vector<int>cur(26,0);
-        for(int i=0;i<p.size();i++)
-        {
-            cur[p[i]-'a']++;
-        }
-       // for(auto c:p)tmap[c]++;
-        
-        int i=0,j=0,counter=p.size(),minstart=0,minlen=INT_MAX;
-        int n=s.size();
-        
-        while(j<n)
-        {
-            if(cur[s[j]-'a']>0)
-            {
-                counter--;
-            }
-            
-            cur[s[j]-'a']--;
-            
-            while(counter==0) //means we got a substring consisiting of our string p
-            {
-                if(j-i+1<minlen)
-                {
-                    minstart=i;
-                    minlen=j-i+1;
+        // Your code here
+        // unordered_map<char,int> mp;
+        vector<int>mp(26,0);
+        int n = s.length();
+        int m = p.length();
+        if(n<m) return "-1";
+        int l = 0;
+        int r = 0;
+        int cnt = 0;
+        int mini = 1e9;
+        int stI = -1;
+        for(int i = 0; i < m ; i++) mp[p[i] - 'a']++;
+        while(l<n && r < n ){
+            if(mp[s[r] - 'a'] > 0) cnt++;
+            mp[s[r] - 'a']--;
+            while(cnt == m){
+                if(r-l+1 < mini){
+                    mini = r-l+1;
+                    stI = l;
                 }
-                
-                cur[s[i]-'a']++;  
-                if(cur[s[i]-'a']>0)
-                {
-                    counter++;
+                mp[s[l] - 'a']++;
+                if(mp[s[l] - 'a'] > 0){
+                    cnt--;
                 }
-                i++;
+                l++;
             }
-            
-            j++;
+            r++;
         }
-        
-        return (minlen!=INT_MAX?s.substr(minstart,minlen):"-1");
-        
+        if(stI == -1) return "-1";
+        string ans = s.substr(stI , mini);
+        return ans;
     }
 };
-
-
-
 
 //{ Driver Code Starts.
 int main()
