@@ -1,63 +1,60 @@
 //{ Driver Code Starts
-//Initial Template for C++
+// Initial Template for C++
 #include <bits/stdc++.h>
 #include <unordered_map>
 using namespace std;
 
 
 // } Driver Code Ends
-//User function Template for C++
+// User function Template for C++
 
-class Solution{
+class Solution {
   public:
-     vector<vector<string> > Anagrams(vector<string>& string_list) {
-        
-        vector<vector<string>> result;
-        
-        unordered_map<string, vector<string>> mp;
-        
-        for(auto x : string_list){
-            
-            string temp = x;
-            sort(x.begin(), x.end());
-            mp[x].push_back(temp);  
+    vector<vector<string>> anagrams(vector<string>& arr) {
+        // code here
+        vector<vector<string>> ans;
+        map<string,vector<string>> m;
+        for(int i=0;i<arr.size();i++){
+            string k=arr[i];
+            sort(k.begin(),k.end());
+            m[k].push_back(arr[i]);
         }
-
-
-        for(auto temp : mp){
-            vector<string> ans = temp.second;
-            result.push_back(ans);
+        for(auto it:m){
+            ans.push_back(it.second);
         }
-        return result;
+        return ans;
     }
-
- 
 };
 
 //{ Driver Code Starts.
 
-int main()
-{
+int main() {
     int t;
-    cin>>t;
-    while(t--)
-    {
-        int n;
-        cin>>n;
-        vector<string> string_list(n);
-        for (int i = 0; i < n; ++i)
-            cin>>string_list[i]; 
-        Solution ob;
-        vector<vector<string> > result = ob.Anagrams(string_list);
-        sort(result.begin(),result.end());
-        for (int i = 0; i < result.size(); i++)
-        {
-            for(int j=0; j < result[i].size(); j++)
-            {
-                cout<<result[i][j]<<" ";
-            }
-            cout<<"\n";
+    cin >> t;
+    cin.ignore();
+    while (t--) {
+
+        vector<string> arr;
+        string input_line;
+        getline(cin, input_line);
+        stringstream ss(input_line);
+        string word;
+        while (ss >> word) {
+            arr.push_back(word);
         }
+
+        Solution ob;
+        vector<vector<string> > result = ob.anagrams(arr);
+        sort(result.begin(), result.end());
+        for (int i = 0; i < result.size(); i++) {
+            for (int j = 0; j < result[i].size(); j++) {
+                cout << result[i][j] << " ";
+            }
+            cout << "\n";
+        }
+
+        cout << "~"
+             << "\n";
     }
 
     return 0;
